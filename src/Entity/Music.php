@@ -73,10 +73,22 @@ class Music
      */
     private $genres;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="musics")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Playlist", mappedBy="musics")
+     */
+    private $playlists;
+
     public function __construct()
     {
         $this->artists = new ArrayCollection();
         $this->genres = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
     }
 
     public function getId()
@@ -239,6 +251,46 @@ class Music
     {
         if ($this->genres->contains($genre)) {
             $this->genres->removeElement($genre);
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Playlist[]
+     */
+    public function getPlaylists(): Collection
+    {
+        return $this->playlists;
+    }
+
+    public function addPlaylist(Playlist $playlist): self
+    {
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists[] = $playlist;
+            $playlist->addMusic($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): self
+    {
+        if ($this->playlists->contains($playlist)) {
+            $this->playlists->removeElement($playlist);
+            $playlist->removeMusic($this);
         }
 
         return $this;
