@@ -89,12 +89,18 @@ class Music
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="music", orphanRemoval=true)
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->artists = new ArrayCollection();
         $this->genres = new ArrayCollection();
         $this->playlists = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId()
@@ -327,6 +333,37 @@ class Music
             // set the owning side to null (unless already changed)
             if ($comment->getMusic() === $this) {
                 $comment->setMusic(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setMusic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getMusic() === $this) {
+                $like->setMusic(null);
             }
         }
 
