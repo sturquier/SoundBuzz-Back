@@ -85,11 +85,6 @@ class Music
     private $playlists;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Like", mappedBy="music")
-     */
-    private $likes;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="music", orphanRemoval=true)
      */
     private $comments;
@@ -99,7 +94,6 @@ class Music
         $this->artists = new ArrayCollection();
         $this->genres = new ArrayCollection();
         $this->playlists = new ArrayCollection();
-        $this->likes = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -303,34 +297,6 @@ class Music
         if ($this->playlists->contains($playlist)) {
             $this->playlists->removeElement($playlist);
             $playlist->removeMusic($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Like[]
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
-            $like->addMusic($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->contains($like)) {
-            $this->likes->removeElement($like);
-            $like->removeMusic($this);
         }
 
         return $this;

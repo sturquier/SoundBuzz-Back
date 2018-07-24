@@ -64,16 +64,6 @@ class User
     private $playlists;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Like", mappedBy="user")
-     */
-    private $likes;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Favorite", mappedBy="user")
-     */
-    private $favorites;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
      */
     private $comments;
@@ -82,8 +72,6 @@ class User
     {
         $this->musics = new ArrayCollection();
         $this->playlists = new ArrayCollection();
-        $this->likes = new ArrayCollection();
-        $this->favorites = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -233,62 +221,6 @@ class User
             if ($playlist->getUser() === $this) {
                 $playlist->setUser(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Like[]
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
-            $like->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->contains($like)) {
-            $this->likes->removeElement($like);
-            $like->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Favorite[]
-     */
-    public function getFavorites(): Collection
-    {
-        return $this->favorites;
-    }
-
-    public function addFavorite(Favorite $favorite): self
-    {
-        if (!$this->favorites->contains($favorite)) {
-            $this->favorites[] = $favorite;
-            $favorite->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavorite(Favorite $favorite): self
-    {
-        if ($this->favorites->contains($favorite)) {
-            $this->favorites->removeElement($favorite);
-            $favorite->removeUser($this);
         }
 
         return $this;
