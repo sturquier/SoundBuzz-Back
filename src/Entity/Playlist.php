@@ -44,9 +44,15 @@ class Playlist
      */
     private $user;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Favorite", mappedBy="playlist")
+     */
+    private $favorites;
+
     public function __construct()
     {
         $this->musics = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId()
@@ -124,6 +130,34 @@ class Playlist
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favorite[]
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorite $favorite): self
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites[] = $favorite;
+            $favorite->addPlaylist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorite $favorite): self
+    {
+        if ($this->favorites->contains($favorite)) {
+            $this->favorites->removeElement($favorite);
+            $favorite->removePlaylist($this);
+        }
 
         return $this;
     }
