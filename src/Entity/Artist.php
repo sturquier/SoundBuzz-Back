@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,16 @@ class Artist
      * @ORM\JoinColumn(nullable=false)
      */
     private $person;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Music", mappedBy="artists")
+     */
+    private $musics;
+
+    public function __construct()
+    {
+        $this->musics = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -52,6 +64,34 @@ class Artist
     public function setPerson(?Person $person): self
     {
         $this->person = $person;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Music[]
+     */
+    public function getMusics(): Collection
+    {
+        return $this->musics;
+    }
+
+    public function addMusic(Music $music): self
+    {
+        if (!$this->musics->contains($music)) {
+            $this->musics[] = $music;
+            $music->addArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMusic(Music $music): self
+    {
+        if ($this->musics->contains($music)) {
+            $this->musics->removeElement($music);
+            $music->removeArtist($this);
+        }
 
         return $this;
     }
