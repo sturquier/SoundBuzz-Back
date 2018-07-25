@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\GenreRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ArtistRepository")
  */
-class Genre
+class Artist
 {
     /**
      * @ORM\Id()
@@ -24,17 +24,18 @@ class Genre
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
-    private $slug;
+    private $type;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="artists")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $photo;
+    private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Music", mappedBy="genres")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="artists")
      */
     private $musics;
 
@@ -60,26 +61,26 @@ class Genre
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getType(): ?int
     {
-        return $this->slug;
+        return $this->type;
     }
 
-    public function setSlug(string $slug): self
+    public function setType(int $type): self
     {
-        $this->slug = $slug;
+        $this->type = $type;
 
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getUser(): ?User
     {
-        return $this->photo;
+        return $this->user;
     }
 
-    public function setPhoto(?string $photo): self
+    public function setUser(?User $user): self
     {
-        $this->photo = $photo;
+        $this->user = $user;
 
         return $this;
     }
@@ -96,7 +97,6 @@ class Genre
     {
         if (!$this->musics->contains($music)) {
             $this->musics[] = $music;
-            $music->addGenre($this);
         }
 
         return $this;
@@ -106,7 +106,6 @@ class Genre
     {
         if ($this->musics->contains($music)) {
             $this->musics->removeElement($music);
-            $music->removeGenre($this);
         }
 
         return $this;

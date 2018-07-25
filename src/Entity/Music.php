@@ -88,12 +88,30 @@ class Music
      */
     private $listens;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="musics")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Genre", inversedBy="musics")
+     */
+    private $genres;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Artist", mappedBy="musics")
+     */
+    private $artists;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
         $this->playlists = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->listens = new ArrayCollection();
+        $this->genres = new ArrayCollection();
+        $this->artists = new ArrayCollection();
     }
 
     public function getId()
@@ -337,6 +355,72 @@ class Music
             if ($listen->getMusic() === $this) {
                 $listen->setMusic(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        if ($this->genres->contains($genre)) {
+            $this->genres->removeElement($genre);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Artist[]
+     */
+    public function getArtists(): Collection
+    {
+        return $this->artists;
+    }
+
+    public function addArtist(Artist $artist): self
+    {
+        if (!$this->artists->contains($artist)) {
+            $this->artists[] = $artist;
+            $artist->addMusic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtist(Artist $artist): self
+    {
+        if ($this->artists->contains($artist)) {
+            $this->artists->removeElement($artist);
+            $artist->removeMusic($this);
         }
 
         return $this;

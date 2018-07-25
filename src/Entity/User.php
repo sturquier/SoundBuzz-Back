@@ -88,6 +88,16 @@ class User
      */
     private $listens;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Music", mappedBy="user", orphanRemoval=true)
+     */
+    private $musics;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Artist", mappedBy="user", orphanRemoval=true)
+     */
+    private $artists;
+
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
@@ -95,6 +105,8 @@ class User
         $this->playlists = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->listens = new ArrayCollection();
+        $this->musics = new ArrayCollection();
+        $this->artists = new ArrayCollection();
     }
 
     public function getId()
@@ -359,6 +371,68 @@ class User
             // set the owning side to null (unless already changed)
             if ($listen->getUser() === $this) {
                 $listen->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Music[]
+     */
+    public function getMusics(): Collection
+    {
+        return $this->musics;
+    }
+
+    public function addMusic(Music $music): self
+    {
+        if (!$this->musics->contains($music)) {
+            $this->musics[] = $music;
+            $music->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMusic(Music $music): self
+    {
+        if ($this->musics->contains($music)) {
+            $this->musics->removeElement($music);
+            // set the owning side to null (unless already changed)
+            if ($music->getUser() === $this) {
+                $music->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Artist[]
+     */
+    public function getArtists(): Collection
+    {
+        return $this->artists;
+    }
+
+    public function addArtist(Artist $artist): self
+    {
+        if (!$this->artists->contains($artist)) {
+            $this->artists[] = $artist;
+            $artist->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtist(Artist $artist): self
+    {
+        if ($this->artists->contains($artist)) {
+            $this->artists->removeElement($artist);
+            // set the owning side to null (unless already changed)
+            if ($artist->getUser() === $this) {
+                $artist->setUser(null);
             }
         }
 
