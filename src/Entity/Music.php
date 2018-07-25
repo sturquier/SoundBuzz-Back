@@ -73,9 +73,27 @@ class Music
      */
     private $likes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Playlist", mappedBy="musics")
+     */
+    private $playlists;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="music", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Listen", mappedBy="music", orphanRemoval=true)
+     */
+    private $listens;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->listens = new ArrayCollection();
     }
 
     public function getId()
@@ -228,6 +246,96 @@ class Music
             // set the owning side to null (unless already changed)
             if ($like->getMusic() === $this) {
                 $like->setMusic(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Playlist[]
+     */
+    public function getPlaylists(): Collection
+    {
+        return $this->playlists;
+    }
+
+    public function addPlaylist(Playlist $playlist): self
+    {
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists[] = $playlist;
+            $playlist->addMusic($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): self
+    {
+        if ($this->playlists->contains($playlist)) {
+            $this->playlists->removeElement($playlist);
+            $playlist->removeMusic($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setMusic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getMusic() === $this) {
+                $comment->setMusic(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Listen[]
+     */
+    public function getListens(): Collection
+    {
+        return $this->listens;
+    }
+
+    public function addListen(Listen $listen): self
+    {
+        if (!$this->listens->contains($listen)) {
+            $this->listens[] = $listen;
+            $listen->setMusic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListen(Listen $listen): self
+    {
+        if ($this->listens->contains($listen)) {
+            $this->listens->removeElement($listen);
+            // set the owning side to null (unless already changed)
+            if ($listen->getMusic() === $this) {
+                $listen->setMusic(null);
             }
         }
 

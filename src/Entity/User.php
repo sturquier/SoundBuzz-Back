@@ -73,10 +73,28 @@ class User
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Playlist", mappedBy="user", orphanRemoval=true)
+     */
+    private $playlists;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Listen", mappedBy="user", orphanRemoval=true)
+     */
+    private $listens;
+
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->listens = new ArrayCollection();
     }
 
     public function getId()
@@ -248,6 +266,99 @@ class User
             // set the owning side to null (unless already changed)
             if ($like->getUser() === $this) {
                 $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Playlist[]
+     */
+    public function getPlaylists(): Collection
+    {
+        return $this->playlists;
+    }
+
+    public function addPlaylist(Playlist $playlist): self
+    {
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists[] = $playlist;
+            $playlist->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): self
+    {
+        if ($this->playlists->contains($playlist)) {
+            $this->playlists->removeElement($playlist);
+            // set the owning side to null (unless already changed)
+            if ($playlist->getUser() === $this) {
+                $playlist->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Listen[]
+     */
+    public function getListens(): Collection
+    {
+        return $this->listens;
+    }
+
+    public function addListen(Listen $listen): self
+    {
+        if (!$this->listens->contains($listen)) {
+            $this->listens[] = $listen;
+            $listen->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListen(Listen $listen): self
+    {
+        if ($this->listens->contains($listen)) {
+            $this->listens->removeElement($listen);
+            // set the owning side to null (unless already changed)
+            if ($listen->getUser() === $this) {
+                $listen->setUser(null);
             }
         }
 

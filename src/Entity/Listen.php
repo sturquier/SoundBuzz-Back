@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ListenRepository")
  */
-class Comment
+class Listen
 {
     /**
      * @ORM\Id()
@@ -17,18 +17,13 @@ class Comment
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $content;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="listens")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Music", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Music", inversedBy="listens")
      * @ORM\JoinColumn(nullable=false)
      */
     private $music;
@@ -36,18 +31,6 @@ class Comment
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): self
-    {
-        $this->content = $content;
-
-        return $this;
     }
 
     public function getUser(): ?User

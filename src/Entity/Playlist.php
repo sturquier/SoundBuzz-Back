@@ -38,9 +38,21 @@ class Playlist
      */
     private $favorites;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="playlists")
+     */
+    private $musics;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="playlists")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
+        $this->musics = new ArrayCollection();
     }
 
     public function getId()
@@ -111,6 +123,44 @@ class Playlist
                 $favorite->setPlaylist(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Music[]
+     */
+    public function getMusics(): Collection
+    {
+        return $this->musics;
+    }
+
+    public function addMusic(Music $music): self
+    {
+        if (!$this->musics->contains($music)) {
+            $this->musics[] = $music;
+        }
+
+        return $this;
+    }
+
+    public function removeMusic(Music $music): self
+    {
+        if ($this->musics->contains($music)) {
+            $this->musics->removeElement($music);
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
