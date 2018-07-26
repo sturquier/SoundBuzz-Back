@@ -31,6 +31,7 @@ class MusicFixtures extends Fixture implements DependentFixtureInterface
 			$music->setCreatedAt(new \DateTime($faker->date($format = 'Y-m-d', $max = 'now')));
 			$music->setDuration($faker->numberBetween($min = 120, $max = 600));
 			$music->setIsActive(true);
+			$music->setDownloads(0);
 			$music->addArtist($this->getReference('artist_'.$i));
 
 			// 5 genres in GenreFixtures

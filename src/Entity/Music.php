@@ -106,6 +106,11 @@ class Music
      */
     private $artists;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $downloads;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
@@ -424,6 +429,18 @@ class Music
             $this->artists->removeElement($artist);
             $artist->removeMusic($this);
         }
+
+        return $this;
+    }
+
+    public function getDownloads(): ?int
+    {
+        return $this->downloads;
+    }
+
+    public function setDownloads(int $downloads): self
+    {
+        $this->downloads = $downloads;
 
         return $this;
     }
