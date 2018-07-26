@@ -18,9 +18,38 @@ class UserFixtures extends Fixture
 		$user1->setPassword('sturquier');
 		$user1->setEmail('turquiersimon@hotmail.fr');
 		$user1->setRole('ROLE_ADMIN');
-		$user1->setIsArtist(false);
 		$user1->setBirthday(new \DateTime('1996-02-23'));
 		$manager->persist($user1);
+
+		$user2 = new User();
+		$user2->setFirstname('Sarah');
+		$user2->setLastName('Abderemane');
+		$user2->setUsername('starofthemoon');
+		$user2->setPassword('starofthemoon');
+		$user2->setEmail('sarahabderemane@gmail.com');
+		$user2->setRole('ROLE_ADMIN');
+		$user2->setBirthday(new \DateTime('2000-01-01'));
+		$manager->persist($user2);
+
+		$user3 = new User();
+		$user3->setFirstname('Pathe');
+		$user3->setLastName('Barry');
+		$user3->setUsername('kyller92');
+		$user3->setPassword('kyller92');
+		$user3->setEmail('pathe.barry92@gmail.com');
+		$user3->setRole('ROLE_ADMIN');
+		$user3->setBirthday(new \DateTime('1994-01-13'));
+		$manager->persist($user3);
+
+		$user4 = new User();
+		$user4->setFirstname('Sophie');
+		$user4->setLastName('Lee');
+		$user4->setUsername('stitchmoonz');
+		$user4->setPassword('stitchmoonz');
+		$user4->setEmail('lee.sophie0@gmail.com');
+		$user4->setRole('ROLE_ADMIN');
+		$user4->setBirthday(new \DateTime('2002-12-25'));
+		$manager->persist($user4);
 
 		$manager->flush();
 	}
