@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MusicRepository")
@@ -21,6 +22,7 @@ class Music
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -36,21 +38,25 @@ class Music
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image()
      */
     private $photo;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
      */
     private $is_explicit;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
      */
     private $downloadable;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
      */
     private $created_at;
 
@@ -62,11 +68,13 @@ class Music
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank()
      */
     private $duration;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank()
      */
     private $is_active;
 
