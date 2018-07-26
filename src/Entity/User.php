@@ -56,11 +56,6 @@ class User
     private $role;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $is_artist;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $birthday;
@@ -95,11 +90,6 @@ class User
      */
     private $musics;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Artist", mappedBy="user", orphanRemoval=true)
-     */
-    private $artists;
-
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
@@ -108,7 +98,6 @@ class User
         $this->comments = new ArrayCollection();
         $this->listens = new ArrayCollection();
         $this->musics = new ArrayCollection();
-        $this->artists = new ArrayCollection();
     }
 
     public function getId()
@@ -196,18 +185,6 @@ class User
     public function setRole(string $role): self
     {
         $this->role = $role;
-
-        return $this;
-    }
-
-    public function getIsArtist(): ?bool
-    {
-        return $this->is_artist;
-    }
-
-    public function setIsArtist(bool $is_artist): self
-    {
-        $this->is_artist = $is_artist;
 
         return $this;
     }
@@ -404,37 +381,6 @@ class User
             // set the owning side to null (unless already changed)
             if ($music->getUser() === $this) {
                 $music->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Artist[]
-     */
-    public function getArtists(): Collection
-    {
-        return $this->artists;
-    }
-
-    public function addArtist(Artist $artist): self
-    {
-        if (!$this->artists->contains($artist)) {
-            $this->artists[] = $artist;
-            $artist->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArtist(Artist $artist): self
-    {
-        if ($this->artists->contains($artist)) {
-            $this->artists->removeElement($artist);
-            // set the owning side to null (unless already changed)
-            if ($artist->getUser() === $this) {
-                $artist->setUser(null);
             }
         }
 

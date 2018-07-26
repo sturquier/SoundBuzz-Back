@@ -29,12 +29,6 @@ class Artist
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="artists")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="artists")
      */
     private $musics;
@@ -69,18 +63,6 @@ class Artist
     public function setType(int $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }
