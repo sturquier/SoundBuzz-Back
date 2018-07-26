@@ -19,26 +19,27 @@ class Artist
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"all_musics_of_one_genre", "one_music"})
+     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"all_musics_of_one_genre", "one_music"})
+     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
-     * @JMS\Groups({"all_musics_of_one_genre", "one_music"})
+     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist"})
      */
     private $type;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="artists")
+     * @JMS\Groups({"one_artist"})
      */
     private $musics;
 

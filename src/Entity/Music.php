@@ -18,75 +18,75 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $file;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $photo;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $is_explicit;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $downloadable;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $transfer_at;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
      */
     private $is_active;
 
