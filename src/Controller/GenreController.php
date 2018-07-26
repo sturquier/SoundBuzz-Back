@@ -28,7 +28,7 @@ class GenreController extends Controller
     /**
      * Fetch a single genre
      *
-     * @Rest\View(serializerGroups={"genre", "music"})
+     * @Rest\View(serializerGroups={"genre", "music", "artist"})
      * @Rest\Get("/genres/{slug}")
      */
     public function getGenreAction(Request $request)
