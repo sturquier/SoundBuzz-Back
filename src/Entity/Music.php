@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MusicRepository")
@@ -17,64 +18,75 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"music"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @JMS\Groups({"music"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"music"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"music"})
      */
     private $file;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image()
+     * @JMS\Groups({"music"})
      */
     private $photo;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
+     * @JMS\Groups({"music"})
      */
     private $is_explicit;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
+     * @JMS\Groups({"music"})
      */
     private $downloadable;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
+     * @JMS\Groups({"music"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
+     * @JMS\Groups({"music"})
      */
     private $transfer_at;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank()
+     * @JMS\Groups({"music"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
+     * @JMS\Groups({"music"})
      */
     private $is_active;
 
@@ -111,6 +123,7 @@ class Music
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Artist", mappedBy="musics")
+     * @JMS\Groups({"artist"})
      */
     private $artists;
 

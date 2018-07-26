@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GenreRepository")
@@ -20,12 +21,14 @@ class Genre
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"genre"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @JMS\Groups({"genre"})
      */
     private $name;
 
@@ -33,17 +36,20 @@ class Genre
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"name"})
      * @Assert\NotBlank()
+     * @JMS\Groups({"genre"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image()
+     * @JMS\Groups({"genre"})
      */
     private $photo;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Music", mappedBy="genres")
+     * @JMS\Groups({"music"})
      */
     private $musics;
 
