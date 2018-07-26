@@ -18,75 +18,75 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $file;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image()
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $photo;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $is_explicit;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $downloadable;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $transfer_at;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank()
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $is_active;
 
@@ -118,12 +118,13 @@ class Music
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Genre", inversedBy="musics")
+     * @JMS\Groups({"one_music"})
      */
     private $genres;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Artist", mappedBy="musics")
-     * @JMS\Groups({"artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre"})
      */
     private $artists;
 

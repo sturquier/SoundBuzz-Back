@@ -21,14 +21,14 @@ class Genre
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"genre"})
+     * @JMS\Groups({"all_genres", "one_music"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"genre"})
+     * @JMS\Groups({"all_genres", "one_music"})
      */
     private $name;
 
@@ -36,20 +36,20 @@ class Genre
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"name"})
      * @Assert\NotBlank()
-     * @JMS\Groups({"genre"})
+     * @JMS\Groups({"all_genres", "one_music"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image()
-     * @JMS\Groups({"genre"})
+     * @JMS\Groups({"all_genres", "one_music"})
      */
     private $photo;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Music", mappedBy="genres")
-     * @JMS\Groups({"music"})
+     * @JMS\Groups({"all_musics_of_one_genre"})
      */
     private $musics;
 
