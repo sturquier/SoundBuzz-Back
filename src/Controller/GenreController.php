@@ -29,12 +29,14 @@ class GenreController extends Controller
      * Fetch a single genre
      *
      * @Rest\View(serializerGroups={"genre", "music"})
-     * @Rest\Get("/genres/{id}")
+     * @Rest\Get("/genres/{slug}")
      */
     public function getGenreAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $genre = $em->getRepository(Genre::class)->find($request->get('id'));
+        $genre = $em->getRepository(Genre::class)->findOneBy([
+            'slug' => $request->get('slug')
+        ]);
 
         if (empty($genre)) {
             return new JsonResponse(['message' => 'Genre not found'], Response::HTTP_NOT_FOUND);
