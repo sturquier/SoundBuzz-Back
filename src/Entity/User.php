@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -21,26 +22,31 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"auth_token"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"auth_token"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"auth_token"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"auth_token"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"auth_token"})
      */
     private $password;
 
