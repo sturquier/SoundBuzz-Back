@@ -1,8 +1,9 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        auth_token_user_provider:
-            id: auth_token_user_provider
+        in_memory: { memory: ~ }
+        # auth_token_user_provider:
+        #     id: auth_token_user_provider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -10,9 +11,9 @@ security:
         main:
             pattern: ^/
             stateless: true
-            simple_preauth:
-                authenticator: auth_token_authenticator
-            provider: auth_token_user_provider
+            # simple_preauth:
+            #     authenticator: auth_token_authenticator
+            # provider: auth_token_user_provider
             anonymous: ~
 
     encoders:
