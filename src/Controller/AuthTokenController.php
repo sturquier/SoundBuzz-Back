@@ -58,4 +58,19 @@ class AuthTokenController extends Controller
     {
         return \FOS\RestBundle\View\View::create(['message' => 'Invalid credentials'], Response::HTTP_BAD_REQUEST);
     }
+
+    /**
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT, serializerGroups={"auth_token"})
+     * @Rest\Delete("/auth-tokens/{id}")
+     */
+    public function removeAuthTokenAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $authToken = $em->getRepository(AuthToken::class)->find($request->get('id'));
+
+        if ($authToken) {
+            $em->remove($authToken);
+            $em->flush();
+        }
+    }
 }
