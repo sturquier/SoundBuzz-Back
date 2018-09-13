@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    musics_directory: '%kernel.project_dir%/public/uploads/musics'
 
 services:
     # default configuration for services in *this* file
@@ -52,5 +53,9 @@ services:
     #     class:     App\Security\AuthTokenAuthenticator
     #     arguments: ["@security.http_utils"]
     #     public:    false
+
+    App\Service\MusicUploader:
+        arguments:
+            $targetDirectory: '%musics_directory%'
 
   

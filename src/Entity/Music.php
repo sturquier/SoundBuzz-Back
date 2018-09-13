@@ -18,77 +18,75 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File()
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $file;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $photo;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @ORM\Column(type="boolean", options={"default": 0})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
-    private $is_explicit;
+    private $is_explicit = 0;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @ORM\Column(type="boolean", options={"default": 1})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
-    private $downloadable;
+    private $downloadable = true;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $transfer_at;
 
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
     private $duration;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist"})
+     * @ORM\Column(type="boolean", options={"default": 1})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
      */
-    private $is_active;
+    private $is_active = true;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="music", orphanRemoval=true)
@@ -129,9 +127,10 @@ class Music
     private $artists;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default": 0})
+     * @JMS\Groups({"create_one_music"})
      */
-    private $downloads;
+    private $downloads = 0;
 
     public function __construct()
     {
