@@ -15,6 +15,20 @@ class MusicController extends Controller
 {
 
     /**
+     * Fetch all musics (admin only !)
+     *
+     * @Rest\View(serializerGroups={"admin_all_musics"})
+     * @Rest\Get("/musics")
+     */
+    public function getMusicsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $musics = $em->getRepository(Music::class)->findAllByAscTitle();
+
+        return $musics;
+    }
+
+    /**
      * Fetch a single music
      *
      * @Rest\View(serializerGroups={"one_music"})

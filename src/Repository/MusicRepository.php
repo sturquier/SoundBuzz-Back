@@ -19,6 +19,11 @@ class MusicRepository extends ServiceEntityRepository
         parent::__construct($registry, Music::class);
     }
 
+    public function findAllByAscTitle()
+    {
+        return $this->findBy([], ['title' => 'ASC']);
+    }
+
 //    /**
 //     * @return Music[] Returns an array of Music objects
 //     */

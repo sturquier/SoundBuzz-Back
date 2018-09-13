@@ -18,14 +18,14 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics"})
      */
     private $title;
 
@@ -51,13 +51,13 @@ class Music
 
     /**
      * @ORM\Column(type="boolean", options={"default": 0})
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics"})
      */
     private $is_explicit = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 1})
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics"})
      */
     private $downloadable = true;
 
@@ -71,7 +71,7 @@ class Music
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics"})
      */
     private $transfer_at;
 
@@ -84,7 +84,7 @@ class Music
 
     /**
      * @ORM\Column(type="boolean", options={"default": 1})
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics"})
      */
     private $is_active = true;
 
