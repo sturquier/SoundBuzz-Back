@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlaylistRepository")
@@ -16,23 +17,27 @@ class Playlist
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"user_playlists"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @JMS\Groups({"user_playlists"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Groups({"user_playlists"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
+     * @JMS\Groups({"user_playlists"})
      */
     private $is_private;
 
@@ -43,6 +48,7 @@ class Playlist
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="playlists")
+     * @JMS\Groups({"user_playlists"})
      */
     private $musics;
 

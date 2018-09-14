@@ -53,4 +53,22 @@ class UserController extends Controller
 
         return $user->getMusics();
     }
+
+    /**
+     * Get all playlists of a single user
+     *
+     * @Rest\View(serializerGroups={"user_playlists"})
+     * @Rest\Get("/users/{id}/playlists")
+     */
+    public function getUserPlaylistsAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($request->get('id'));
+
+        if (empty($user)) {
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $user->getPlaylists();
+    }
 }
