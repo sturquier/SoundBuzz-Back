@@ -26,7 +26,7 @@ class Artist
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist"})
+     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist", "user_musics"})
      */
     private $name;
 
