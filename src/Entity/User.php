@@ -58,16 +58,19 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
+     * @JMS\Groups({"auth_token"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"auth_token"})
      */
     private $role = 'ROLE_USER';
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Groups({"auth_token"})
      */
     private $birthday;
 
