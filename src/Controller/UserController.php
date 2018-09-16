@@ -81,7 +81,7 @@ class UserController extends Controller
     public function patchUserAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->find($request->request->get('id'));
+        $user = $em->getRepository(User::class)->find($request->get('id'));
 
         if (empty($user)) {
             return new JsonResponse(['message' => 'User not found']);
