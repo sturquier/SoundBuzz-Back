@@ -71,4 +71,32 @@ class UserController extends Controller
 
         return $user->getPlaylists();
     }
+
+    /**
+     *  Edit user profile
+     *
+     *  @Rest\View(serializerGroups={"user"})
+     *  @Rest\Patch("/users/{id}")
+     */
+    public function patchUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User:class)->find($request->request->get('id'));
+
+        if (empty($user)) {
+            return new JsonResponse(['message' => 'User not found']);
+        }
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->submit($request->request->all(), false);
+
+        if ($form->isValid()) {
+            $em->persist($user);
+            $em->flush();
+
+            return $user;
+        }
+
+        return $form;
+    }
 }
