@@ -20,7 +20,6 @@ class MusicType extends AbstractType
             ->add('downloadable')
             ->add('created_at', DateType::class, ['widget' => 'single_text'])
             // ->add('transfer_at') onCreate Gedmo
-            ->add('duration')
             ->add('is_active')
             // ->add('playlists')
             // ->add('user')

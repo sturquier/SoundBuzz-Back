@@ -37,7 +37,7 @@ class Music
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File()
+     * @Assert\File(mimeTypes={ "audio/mp3", "audio/mpeg","audio/mp4" })
      * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "user_musics"})
      */
     private $file;
