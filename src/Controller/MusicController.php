@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use App\Service\MusicFileUploader;
+use App\Service\MusicUploader;
 use App\Entity\Music;
 use App\Form\MusicType;
 
@@ -52,23 +52,22 @@ class MusicController extends Controller
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"create_one_music"})
      * @Rest\Post("/musics")
      */
-    public function postMusicAction(Request $request)
+    public function postMusicAction(Request $request, MusicUploader $uploader)
     {
         $em = $this->getDoctrine()->getManager();
         $music = new Music();
 
         $form = $this->createForm(MusicType::class, $music);
-
-        $data = $request->request->all();
-
-        if ($request->request->has('file')) {
-            $file = new MusicFileUploader($request->request->get('file'));
-            $data['file'] = $file;
-        }
-
-        $form->bind($data);
+        $form->submit($request->request->all());
 
         if ($form->isValid()) {
+
+            $musicFile = file_get_contents($request->request->get('file'));
+            $fileName = $uploader->upload($musicFile);
+
+            return $fileName;
+
+            $music->setFile($fileName);
 
             $em->persist($music);
             $em->flush();
@@ -77,7 +76,5 @@ class MusicController extends Controller
         }
 
         return $form;
-
     }
-
 }

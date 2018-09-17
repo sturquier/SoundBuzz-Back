@@ -15,7 +15,8 @@ class MusicType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('photo')
+            ->add('file')
+            // ->add('photo')
             ->add('is_explicit')
             ->add('downloadable')
             ->add('created_at', DateType::class, ['widget' => 'single_text'])

@@ -77,7 +77,6 @@ class Music
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank()
      * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "user_musics", "user_playlists"})
      */
     private $duration;
