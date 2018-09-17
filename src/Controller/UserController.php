@@ -99,4 +99,20 @@ class UserController extends Controller
 
         return $form;
     }
+
+    /**
+     *  Admin only !
+     *  Fetch all users
+     *
+     * @Rest\View(serializerGroups={"admin_all_users"})
+     * @Rest\Get("/users")
+     *
+     */
+    public function getUsersAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository(User::class)->findAllByAscUsername();
+
+        return $users;
+    }
 }

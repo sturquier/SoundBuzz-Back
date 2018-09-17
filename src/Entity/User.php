@@ -22,25 +22,25 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"auth_token", "add_comment"})
+     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token"})
+     * @JMS\Groups({"auth_token", "admin_all_users"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token"})
+     * @JMS\Groups({"auth_token", "admin_all_users"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token", "add_comment"})
+     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users"})
      */
     private $username;
 
@@ -51,7 +51,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token"})
+     * @JMS\Groups({"auth_token", "admin_all_users"})
      */
     private $email;
 
@@ -64,7 +64,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token"})
+     * @JMS\Groups({"auth_token", "admin_all_users"})
      */
     private $role = 'ROLE_USER';
 
@@ -73,6 +73,12 @@ class User implements UserInterface
      * @JMS\Groups({"auth_token"})
      */
     private $birthday;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": 1})
+     * @JMS\Groups({"admin_all_users"})
+     */
+    private $is_active = true;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Favorite", mappedBy="user", orphanRemoval=true)
@@ -226,6 +232,18 @@ class User implements UserInterface
     public function setBirthday(string $birthday): self
     {
         $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->is_active;
+    }
+
+    public function setIsActive(bool $is_active): self
+    {
+        $this->is_active = $is_active;
 
         return $this;
     }
