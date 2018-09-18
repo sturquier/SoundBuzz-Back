@@ -99,6 +99,7 @@ class Music
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="music", orphanRemoval=true)
+     * @JMS\Groups({"one_music"})
      */
     private $comments;
 

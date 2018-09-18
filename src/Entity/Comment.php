@@ -15,21 +15,21 @@ class Comment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"add_comment"})
+     * @JMS\Groups({"add_comment", "one_music"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"add_comment"})
+     * @JMS\Groups({"add_comment", "one_music"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
-     * @JMS\Groups({"add_comment"})
+     * @JMS\Groups({"add_comment", "one_music"})
      */
     private $user;
 
