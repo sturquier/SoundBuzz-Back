@@ -18,14 +18,14 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment", "download_music"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment", "download_music"})
      */
     private $title;
 
@@ -64,7 +64,7 @@ class Music
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "user_musics"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "user_musics", "download_music"})
      */
     private $created_at;
 
@@ -128,7 +128,7 @@ class Music
 
     /**
      * @ORM\Column(type="integer", options={"default": 0})
-     * @JMS\Groups({"create_one_music", "user_musics"})
+     * @JMS\Groups({"one_music", "create_one_music", "user_musics", "download_music"})
      */
     private $downloads = 0;
 
@@ -462,6 +462,13 @@ class Music
     public function setDownloads(int $downloads): self
     {
         $this->downloads = $downloads;
+
+        return $this;
+    }
+
+    public function incrementDownloads(): self
+    {
+        $this->downloads ++;
 
         return $this;
     }

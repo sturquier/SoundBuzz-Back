@@ -77,4 +77,25 @@ class MusicController extends Controller
 
         return $form;
     }
+
+    /**
+     * Increment downloads number of a single music
+     * 
+     * @Rest\View(serializerGroups={"download_music"})
+     * @Rest\Patch("/musics/{id}/download")
+     */
+    public function downloadMusicAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $music = $em->getRepository(Music::class)->find($request->get('id'));
+    
+        if (empty($music)) {
+            return new JsonResponse(['message' => 'Music not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $music->incrementDownloads();
+
+        $em->persist($music);
+        $em->flush();
+    }
 }
