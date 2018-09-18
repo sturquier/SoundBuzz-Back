@@ -17,27 +17,27 @@ class Playlist
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"user_playlists"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"user_playlists"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Groups({"user_playlists"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"user_playlists"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist"})
      */
     private $is_private;
 
@@ -55,6 +55,7 @@ class Playlist
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="playlists")
      * @ORM\JoinColumn(nullable=false)
+     * @JMS\Groups({"create_one_playlist"})
      */
     private $user;
 
