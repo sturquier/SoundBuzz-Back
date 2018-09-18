@@ -115,4 +115,49 @@ class UserController extends Controller
 
         return $users;
     }
+
+    /**
+     *  Admin only !
+     *  Delete a single user.
+     *  An admin cannot delete another admin => avoid god admin
+     *
+     *  @Rest\View(statusCode=Response::HTTP_NO_CONTENT, serializerGroups={"admin_delete_user"})
+     *  @Rest\Delete("/users/{id}")
+     */
+    public function deleteUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($request->get('id'));
+
+        if (empty($user)) {
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($user->getRole() === 'ROLE_ADMIN') {
+            return new JsonResponse(['message' => 'You cannot delete an administrator ;)'], Response::HTTP_FORBIDDEN);
+        }
+
+        foreach ($user->getLikes() as $like) {
+            $user->removeLike($like);
+        }
+
+        foreach ($user->getPlaylists() as $playlist) {
+            $user->removePlaylist($playlist);
+        }
+
+        foreach ($user->getComments() as $comment) {
+            $user->removeComment($comment);
+        }
+
+        foreach ($user->getListens() as $listen) {
+            $user->removeListen($listen);
+        }
+
+        foreach ($user->getMusics() as $music) {
+            $user->removeMusic($music);
+        }
+
+        $em->remove($user);
+        $em->flush();
+    }
 }
