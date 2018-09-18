@@ -6,7 +6,6 @@ use App\Entity\Music;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class MusicType extends AbstractType
 {
@@ -19,7 +18,7 @@ class MusicType extends AbstractType
             // ->add('photo')
             ->add('is_explicit')
             ->add('downloadable')
-            ->add('created_at', DateType::class, ['widget' => 'single_text'])
+            ->add('created_at')
             // ->add('transfer_at') onCreate Gedmo
             ->add('is_active')
             // ->add('playlists')

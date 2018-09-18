@@ -28,7 +28,7 @@ class MusicFixtures extends Fixture implements DependentFixtureInterface
 			$music->setFile('Music file');
 			$music->setIsExplicit(false);
 			$music->setDownloadable(true);
-			$music->setCreatedAt(new \DateTime($faker->date($format = 'Y-m-d', $max = 'now')));
+			$music->setCreatedAt($faker->date($format = 'Y-m-d', $max = 'now'));
 			$music->setDuration($faker->numberBetween($min = 120, $max = 600));
 			$music->setIsActive(true);
 			$music->setDownloads(0);

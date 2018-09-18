@@ -62,8 +62,7 @@ class Music
     private $downloadable = true;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255)
      * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "user_musics", "download_music"})
      */
     private $created_at;
@@ -219,12 +218,12 @@ class Music
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?string
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(string $created_at): self
     {
         $this->created_at = $created_at;
 
