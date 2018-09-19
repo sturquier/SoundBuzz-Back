@@ -34,6 +34,7 @@ services:
     App\EventListener\RegisterUserListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
 
     # auth_token_user_provider:
     #     class: App\Security\AuthTokenUserProvider

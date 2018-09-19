@@ -16,7 +16,10 @@ class RegisterUserListener
         $this->encoder = $encoder;
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    /**
+     *  When register & change password
+     */
+    private function encodeUserPassword($args)
     {
         $entity = $args->getEntity();
 
@@ -27,6 +30,16 @@ class RegisterUserListener
         $password = $this->encoder->encodePassword($entity, $entity->getPassword());
 
         $entity->setPassword($password);
+    }
+
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $this->encodeUserPassword($args);
+    }
+
+    public function preUpdate(LifecycleEventArgs $args)
+    {
+        $this->encodeUserPassword($args);
     }
 
 
