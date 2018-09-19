@@ -21,14 +21,14 @@ class Genre
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"all_genres", "one_music"})
+     * @JMS\Groups({"all_genres", "one_music", "admin_delete_genre"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"all_genres", "one_music", "user_musics"})
+     * @JMS\Groups({"all_genres", "one_music", "user_musics", "admin_delete_genre"})
      */
     private $name;
 

@@ -38,6 +38,10 @@ class GenreFixtures extends Fixture implements DependentFixtureInterface
 		$this->addReference('genre_5', $genre5);
 		$manager->persist($genre5);
 
+		$defaultGenre = new Genre();
+		$defaultGenre->setName('Autre');
+		$manager->persist($defaultGenre);
+
 		$manager->flush();
 	}
 

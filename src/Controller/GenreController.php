@@ -44,4 +44,32 @@ class GenreController extends Controller
 
         return $genre;
     }
+
+    /**
+     *  Admin only ! Delete a single genre
+     *  If the genre got musics & these musics are only related to the 
+     *  removed genre => attach these musics to 'default' genre
+     *
+     *  @Rest\View(serializerGroups={"admin_delete_genre"})
+     *  @Rest\Delete("/genres/{id}")
+     */
+    public function deleteGenreAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $genre = $em->getRepository(Genre::class)->find($request->get('id'));
+
+        $defaultGenre = $em->getRepository(Genre::class)->findOneBy(['name' => 'Autre']);
+
+        $genreMusics = $genre->getMusics();
+        foreach ($genreMusics as $music) {
+            if (count($music->getGenres()) === 1) {
+                $defaultGenre->addMusic($music);
+            }
+
+            $genre->removeMusic($music);
+        }
+
+        $em->remove($genre);
+        $em->flush();
+    }
 }
