@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use App\Service\GenrePhotoUploader;
 use App\Entity\Genre;
+use App\Form\GenreType;
 
 class GenreController extends Controller
 {
@@ -71,5 +73,38 @@ class GenreController extends Controller
 
         $em->remove($genre);
         $em->flush();
+    }
+
+    /**
+     *  Admin only ! Create a single genre
+     *
+     *  @Rest\View(serializerGroups={"admin_create_genre"})
+     *  @Rest\Post("/genres")
+     */
+    public function createGenreAction(Request $request, GenrePhotoUploader $uploader)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $genre = new Genre();
+
+        $form = $this->createForm(GenreType::class, $genre);
+        $form->submit(array_merge(
+            $request->request->all(),
+            $request->files->all()
+        ));
+
+        if ($form->isValid()) {
+            
+            $photo = $form->get('photo')->getData();
+            $photoName = $uploader->upload($photo);
+
+            $genre->setPhoto($photoName);
+
+            $em->persist($genre);
+            $em->flush();
+
+            return $genre;
+        }
+
+        return $form;
     }
 }

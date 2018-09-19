@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     musics_directory: '%kernel.project_dir%/public/uploads/musics'
+    genres_photos_directory: '%kernel.project_dir%/public/uploads/genres/photos'
 
 services:
     # default configuration for services in *this* file
@@ -57,5 +58,9 @@ services:
     App\Service\MusicUploader:
         arguments:
             $targetDirectory: '%musics_directory%'
+
+    App\Service\GenrePhotoUploader:
+        arguments:
+            $targetDirectory: '%genres_photos_directory%'
 
   

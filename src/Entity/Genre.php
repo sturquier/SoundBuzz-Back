@@ -21,21 +21,19 @@ class Genre
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"all_genres", "one_music", "admin_delete_genre"})
+     * @JMS\Groups({"all_genres", "one_music", "admin_delete_genre", "admin_create_genre"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @JMS\Groups({"all_genres", "one_music", "user_musics", "admin_delete_genre"})
+     * @JMS\Groups({"all_genres", "one_music", "user_musics", "admin_delete_genre", "admin_create_genre"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Slug(fields={"name"})
-     * @Assert\NotBlank()
      * @JMS\Groups({"all_genres", "one_music"})
      */
     private $slug;
@@ -43,7 +41,7 @@ class Genre
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Image()
-     * @JMS\Groups({"all_genres", "one_music"})
+     * @JMS\Groups({"all_genres", "one_music", "admin_create_genre"})
      */
     private $photo;
 
