@@ -17,27 +17,27 @@ class Playlist
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"user_playlists", "create_one_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"user_playlists", "create_one_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Groups({"user_playlists", "create_one_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"user_playlists", "create_one_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
      */
     private $is_private;
 
@@ -48,7 +48,7 @@ class Playlist
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="playlists")
-     * @JMS\Groups({"user_playlists"})
+     * @JMS\Groups({"user_playlists", "add_music_to_playlist"})
      */
     private $musics;
 
