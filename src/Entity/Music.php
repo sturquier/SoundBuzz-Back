@@ -37,7 +37,10 @@ class Music
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File(mimeTypes={ "audio/mp3", "audio/mpeg","audio/mp4" })
+     * @Assert\File(
+     *      maxSize = "20M",
+     *      mimeTypes={ "audio/mp3", "audio/mpeg","audio/mp4" }
+     * )
      * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "user_musics"})
      */
     private $file;
@@ -75,10 +78,10 @@ class Music
     private $transfer_at;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", options={"default": 0})
      * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "user_musics", "user_playlists"})
      */
-    private $duration;
+    private $duration = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 1})

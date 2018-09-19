@@ -16,7 +16,7 @@ class MusicUploader
     // TODO voir pour ranger les musiques par user
     public function upload(UploadedFile $file)
     {
-    	$fileName = $file->guessExtension();
+    	$fileName = $file->getClientOriginalName();
     	$file->move($this->getTargetDirectory(), $fileName);
 
     	return $fileName;

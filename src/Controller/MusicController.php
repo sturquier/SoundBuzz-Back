@@ -58,14 +58,15 @@ class MusicController extends Controller
         $music = new Music();
 
         $form = $this->createForm(MusicType::class, $music);
-        $form->submit($request->request->all());
+        $form->submit(array_merge(
+            $request->request->all(),
+            $request->files->all()
+        ));
 
         if ($form->isValid()) {
 
-            $musicFile = file_get_contents($request->request->get('file'));
-            $fileName = $uploader->upload($musicFile);
-
-            return $fileName;
+            $file = $form->get('file')->getData();
+            $fileName = $uploader->upload($file);
 
             $music->setFile($fileName);
 
