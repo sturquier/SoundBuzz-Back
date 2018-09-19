@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Entity\User;
+use App\Entity\Music;
+use App\Entity\Like;
 use App\Form\UserType;
+use App\Form\LikeType;
 
 class UserController extends Controller
 {
@@ -158,6 +161,56 @@ class UserController extends Controller
         }
 
         $em->remove($user);
+        $em->flush();
+    }
+
+    /**
+     *  Like / Remove like of a single music
+     *
+     *  @Rest\View(serializerGroups={"user_likes"})
+     *  @Rest\Post("/users/{id}/like")
+     */
+    public function likeMusicAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $isAlreadyLiked = false;
+
+        $currentUser = $em->getRepository(User::class)->find($request->get('id'));
+        if (empty($currentUser)) {
+            return new JsonResponse(['message' => 'You need to log in to like a music'], Response::HTTP_FORBIDDEN);
+        }
+
+        $music = $em->getRepository(Music::class)->find($request->request->get('music'));
+        if (empty($music)) {
+            return new JsonResponse(['message' => 'Music not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Check if already liked
+        foreach ($currentUser->getLikes() as $like) {
+            if ($like->getMusic()->getId() === $request->request->get('music')) {
+                $isAlreadyLiked = true;
+            }
+        }
+
+        if ($isAlreadyLiked === true) {
+            $likeToRemove = $em->getRepository(Like::class)->findOneBy([
+                'user'  => $currentUser,
+                'music' => $music
+            ]);
+            $em->remove($likeToRemove);
+        } else {
+            $like = new Like();
+            $form = $this->createForm(LikeType::class, $like);
+            $form->submit($request->request->all());
+
+            if ($form->isValid()) {
+                $like->setUser($currentUser);
+                $like->setMusic($music);
+
+                $em->persist($like);
+            }
+        }
+
         $em->flush();
     }
 }
