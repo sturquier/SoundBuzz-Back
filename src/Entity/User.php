@@ -22,7 +22,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users", "admin_delete_user", "one_music", "create_one_playlist", "admin_get_user", "get_playlist_details"})
+     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users", "admin_delete_user", "one_music", "create_one_playlist", "admin_get_user", "get_playlist_details", "one_music"})
      */
     private $id;
 

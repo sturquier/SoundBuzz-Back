@@ -112,6 +112,7 @@ class Music
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="musics")
      * @ORM\JoinColumn(nullable=true)
+     * @JMS\Groups({"one_music"})
      */
     private $user;
 
