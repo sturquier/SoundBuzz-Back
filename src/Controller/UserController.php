@@ -188,7 +188,7 @@ class UserController extends Controller
 
         // Check if already liked
         foreach ($currentUser->getLikes() as $like) {
-            if ($like->getMusic()->getId() === $request->request->get('music')) {
+            if ($like->getMusic()->getId() === (int) $request->request->get('music')) {
                 $isAlreadyLiked = true;
             }
         }
