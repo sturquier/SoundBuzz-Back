@@ -21,6 +21,10 @@ class RegisterUserListener
      */
     private function encodeUserPassword($args)
     {
+    }
+
+    public function prePersist(LifecycleEventArgs $args)
+    {
         $entity = $args->getEntity();
 
         if (!$entity instanceof User) {
@@ -32,14 +36,21 @@ class RegisterUserListener
         $entity->setPassword($password);
     }
 
-    public function prePersist(LifecycleEventArgs $args)
-    {
-        $this->encodeUserPassword($args);
-    }
-
     public function preUpdate(LifecycleEventArgs $args)
     {
-        $this->encodeUserPassword($args);
+        $entity = $args->getEntity();
+        $entityManager = $args->getEntityManager();
+
+        if (!$entity instanceof User) {
+            return;
+        }
+
+        $changeSet = $entityManager->getUnitOfWork()->getEntityChangeSet($entity);
+        if (isset($changeSet['password'])) {
+            $password = $this->encoder->encodePassword($entity, $entity->getPassword());
+
+            $entity->setPassword($password);
+        }
     }
 
 
