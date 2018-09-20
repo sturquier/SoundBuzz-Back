@@ -104,4 +104,49 @@ class MusicController extends Controller
         $em->persist($music);
         $em->flush();
     }
+
+    /**
+     *  Delete a single music
+     *
+     *  @Rest\View()
+     *  @Rest\Delete("/musics/{id}")
+     */
+    public function deleteMusicAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $music = $em->getRepository(Music::class)->find($request->get('id'));
+    
+        if (empty($music)) {
+            return new JsonResponse(['message' => 'Music not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        foreach ($music->getLikes() as $like) {
+            $music->removeLike($like);
+        }
+
+        foreach ($music->getPlaylists() as $playlist) {
+            $playlist->removeMusic($music);
+        }
+
+        foreach ($music->getComments() as $comment) {
+            $music->removeComment($comment);
+        }
+
+        $musicUser = $music->getUser();
+        foreach ($musicUser->getMusics() as $m) {
+            $musicUser->removeMusic($music);
+        }
+
+        foreach ($music->getGenres() as $genre) {
+            $genre->removeMusic($music);
+        }
+
+        foreach ($music->getArtists() as $artist) {
+            $artist->removeMusic($music);
+        }
+
+        $em->remove($music);
+        $em->flush();
+    }
 }
