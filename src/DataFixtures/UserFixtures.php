@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
 		$user3->setUsername('kyller92');
 		$user3->setPassword('kyller92');
 		$user3->setEmail('pathe.barry92@gmail.com');
-		$user3->setRole('ROLE_ADMIN');
+		$user3->setRole('ROLE_USER');
 		$manager->persist($user3);
 
 		$user4 = new User();
@@ -44,7 +44,7 @@ class UserFixtures extends Fixture
 		$user4->setUsername('stitchmoonz');
 		$user4->setPassword('stitchmoonz');
 		$user4->setEmail('lee.sophie0@gmail.com');
-		$user4->setRole('ROLE_ADMIN');
+		$user4->setRole('ROLE_MODERATOR');
 		$manager->persist($user4);
 
 		$manager->flush();

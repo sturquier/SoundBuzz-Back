@@ -6,4 +6,4 @@
 /vendor/
 ###< symfony/framework-bundle ###
 #files
-/public/uploads/*
+/public/uploads/musics/*
