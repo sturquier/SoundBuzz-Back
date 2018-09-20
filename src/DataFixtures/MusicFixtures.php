@@ -10,7 +10,7 @@ use Faker;
 use RauweBieten\PhpFakerMusic;
 use App\DataFixtures\ArtistFixtures;
 
-class MusicFixtures extends Fixture implements DependentFixtureInterface
+class MusicFixtures //extends Fixture implements DependentFixtureInterface
 {
 	// public function load(ObjectManager $manager)
 	// {
