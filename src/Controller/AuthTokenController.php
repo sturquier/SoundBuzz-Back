@@ -43,6 +43,10 @@ class AuthTokenController extends Controller
             return $this->invalidCredentials();
         }
 
+        if ($user->getIsActive() === false) {
+            return \FOS\RestBundle\View\View::create(['message' => 'Votre compte a été désactivé'], Response::HTTP_FORBIDDEN);
+        }
+
         $authToken = new AuthToken();
         $authToken->setValue(base64_encode(random_bytes(50)));
         $authToken->setCreatedAt(new \DateTime('now'));
