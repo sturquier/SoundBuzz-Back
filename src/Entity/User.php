@@ -22,25 +22,25 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users", "admin_delete_user", "one_music", "create_one_playlist"})
+     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users", "admin_delete_user", "one_music", "create_one_playlist", "admin_get_user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token", "admin_all_users", "admin_delete_user"})
+     * @JMS\Groups({"auth_token", "admin_all_users", "admin_delete_user", "admin_get_user"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token", "admin_all_users", "admin_delete_user"})
+     * @JMS\Groups({"auth_token", "admin_all_users", "admin_delete_user", "admin_get_user"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users", "admin_delete_user", "one_music", "create_one_playlist"})
+     * @JMS\Groups({"auth_token", "add_comment", "admin_all_users", "admin_delete_user", "one_music", "create_one_playlist", "admin_get_user"})
      */
     private $username;
 
@@ -51,7 +51,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token", "admin_all_users", "admin_delete_user"})
+     * @JMS\Groups({"auth_token", "admin_all_users", "admin_delete_user", "admin_get_user"})
      */
     private $email;
 
@@ -64,19 +64,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token", "admin_all_users"})
+     * @JMS\Groups({"auth_token", "admin_all_users", "admin_get_user"})
      */
     private $role = 'ROLE_USER';
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"auth_token"})
+     * @JMS\Groups({"auth_token", "admin_get_user"})
      */
     private $birthday;
 
     /**
      * @ORM\Column(type="boolean", options={"default": 1})
-     * @JMS\Groups({"admin_all_users"})
+     * @JMS\Groups({"admin_all_users", "admin_get_user"})
      */
     private $is_active = true;
 
