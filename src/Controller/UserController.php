@@ -12,6 +12,7 @@ use App\Entity\Music;
 use App\Entity\Like;
 use App\Form\UserType;
 use App\Form\LikeType;
+use App\Form\AdminEditUserType;
 
 class UserController extends Controller
 {
@@ -231,5 +232,33 @@ class UserController extends Controller
         }
 
         return $user;
+    }
+
+    /**
+     *  Admin only ! Edit user
+     *
+     *  @Rest\View(serializerGroups={"user"})
+     *  @Rest\Patch("/admin/users/{id}")
+     */
+    public function patchAdminUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find($request->get('id'));
+
+        if (empty($user)) {
+            return new JsonResponse(['message' => 'User not found']);
+        }
+
+        $form = $this->createForm(AdminEditUserType::class, $user);
+        $form->submit($request->request->all(), false);
+
+        if ($form->isValid()) {
+            $em->persist($user);
+            $em->flush();
+
+            return $user;
+        }
+
+        return $form;
     }
 }

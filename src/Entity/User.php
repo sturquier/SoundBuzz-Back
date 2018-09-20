@@ -68,12 +68,6 @@ class User implements UserInterface
      */
     private $role = 'ROLE_USER';
 
-    // /**
-    // * @ORM\Column(type="string", length=255)
-    // * @JMS\Groups({"auth_token", "admin_get_user"})
-    // */
-    //private $birthday = '2018-01-01';
-
     /**
      * @ORM\Column(type="boolean", options={"default": 1})
      * @JMS\Groups({"admin_all_users", "admin_get_user"})
@@ -223,18 +217,6 @@ class User implements UserInterface
     {
         $this->password = null;
     }
-
-    // public function getBirthday(): ?string
-    // {
-    //     return $this->birthday;
-    // }
-
-    // public function setBirthday(string $birthday): self
-    // {
-    //     $this->birthday = $birthday;
-
-    //     return $this;
-    // }
 
     public function getIsActive(): ?bool
     {
