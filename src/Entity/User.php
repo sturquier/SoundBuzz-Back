@@ -72,7 +72,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @JMS\Groups({"auth_token", "admin_get_user"})
      */
-    private $birthday;
+    private $birthday = '2018-01-01';
 
     /**
      * @ORM\Column(type="boolean", options={"default": 1})
