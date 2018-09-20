@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Service\MusicUploader;
 use App\Entity\Music;
+use App\Entity\User;
 use App\Form\MusicType;
 
 class MusicController extends Controller
@@ -63,12 +64,16 @@ class MusicController extends Controller
             $request->files->all()
         ));
 
+        $currentUser = $em->getRepository(User::class)->find($request->request->get('user'));
+
         if ($form->isValid()) {
 
             $file = $form->get('file')->getData();
             $fileName = $uploader->upload($file);
 
             $music->setFile($fileName);
+
+            $music->setUser($currentUser);
 
             $em->persist($music);
             $em->flush();

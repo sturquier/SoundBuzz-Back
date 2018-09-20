@@ -22,7 +22,7 @@ class MusicType extends AbstractType
             // ->add('transfer_at') onCreate Gedmo
             ->add('is_active')
             // ->add('playlists')
-            // ->add('user')
+            ->add('user')
             // ->add('genres')
             // ->add('artists')
         ;
