@@ -261,4 +261,35 @@ class UserController extends Controller
 
         return $form;
     }
+
+    /**
+     *  Check is user has already liked music
+     *
+     *  @Rest\View()
+     *  @Rest\Get("/users/{id}/has_liked/{musicId}")
+     */
+    public function getUserHasLikedMusicAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $isAlreadyLiked = false;
+
+        $user = $em->getRepository(User::class)->find($request->get('id'));
+
+        if (empty($user)) {
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Check if already liked
+        foreach ($user->getLikes() as $like) {
+            if ($like->getMusic()->getId() === (int) $request->get('musicId')) {
+                $isAlreadyLiked = true;
+            }
+        }
+
+        if ($isAlreadyLiked === true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
