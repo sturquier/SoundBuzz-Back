@@ -70,7 +70,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="boolean", options={"default": 1})
-     * @JMS\Groups({"admin_all_users", "admin_get_user"})
+     * @JMS\Groups({"auth_token", "admin_all_users", "admin_get_user"})
      */
     private $is_active = true;
 
