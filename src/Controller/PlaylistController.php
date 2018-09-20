@@ -75,4 +75,22 @@ class PlaylistController extends Controller
 
 		return $playlist;	
 	}
+
+	/**
+	 *	Get details of a single playlist
+	 *
+	 *	@Rest\View(serializerGroups={"get_playlist_details"})
+	 * 	@Rest\Get("/playlists/{id}")
+	 */
+	public function getPlaylistDetails(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$playlist = $em->getRepository(Playlist::class)->find($request->get('id'));
+
+		if (empty($playlist)) {
+			return new JsonResponse(['message' => 'Playlist not found'], Response::HTTP_NOT_FOUND);
+		}
+
+		return $playlist;
+	}
 }

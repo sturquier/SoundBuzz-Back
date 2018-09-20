@@ -18,13 +18,13 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment", "download_music", "add_music_to_playlist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment", "download_music", "add_music_to_playlist", "get_playlist_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment", "download_music", "add_music_to_playlist"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "one_artist", "create_one_music", "admin_all_musics", "user_musics", "user_playlists", "add_comment", "download_music", "add_music_to_playlist", "get_playlist_details"})
      */
     private $title;
 
@@ -123,7 +123,7 @@ class Music
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Artist", mappedBy="musics")
-     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "user_musics"})
+     * @JMS\Groups({"one_music", "all_musics_of_one_genre", "user_musics", "get_playlist_details"})
      */
     private $artists;
 

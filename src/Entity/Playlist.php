@@ -17,27 +17,27 @@ class Playlist
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist", "get_playlist_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist", "get_playlist_details"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist", "get_playlist_details"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank()
-     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist"})
+     * @JMS\Groups({"user_playlists", "create_one_playlist", "add_music_to_playlist", "get_playlist_details"})
      */
     private $is_private;
 
@@ -48,14 +48,14 @@ class Playlist
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="playlists")
-     * @JMS\Groups({"user_playlists", "add_music_to_playlist"})
+     * @JMS\Groups({"user_playlists", "add_music_to_playlist", "get_playlist_details"})
      */
     private $musics;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="playlists")
      * @ORM\JoinColumn(nullable=false)
-     * @JMS\Groups({"create_one_playlist"})
+     * @JMS\Groups({"create_one_playlist", "get_playlist_details"})
      */
     private $user;
 

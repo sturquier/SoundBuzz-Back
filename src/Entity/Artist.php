@@ -19,14 +19,14 @@ class Artist
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist"})
+     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist", "get_playlist_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist", "user_musics"})
+     * @JMS\Groups({"all_musics_of_one_genre", "one_music", "all_artists", "one_artist", "user_musics", "get_playlist_details"})
      */
     private $name;
 
