@@ -15,7 +15,7 @@ class MusicType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('file')
-            // ->add('photo')
+            ->add('photo')
             ->add('is_explicit')
             ->add('downloadable')
             ->add('created_at')

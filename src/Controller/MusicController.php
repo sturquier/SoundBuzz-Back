@@ -10,6 +10,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Service\MusicUploader;
 use App\Entity\Music;
 use App\Entity\User;
+use App\Entity\Genre;
+use App\Entity\Artist;
 use App\Form\MusicType;
 
 class MusicController extends Controller
@@ -65,15 +67,22 @@ class MusicController extends Controller
         ));
 
         $currentUser = $em->getRepository(User::class)->find($request->request->get('user'));
+        // $artist = $em->getRepository(Artist::class)->find($request->request->get('artists'));
+        // $genre = $em->getRepository(Genre::class)->find($request->request->get('genres'));
 
         if ($form->isValid()) {
 
             $file = $form->get('file')->getData();
-            $fileName = $uploader->upload($file);
-
+            $fileName = $uploader->uploadFile($file);
             $music->setFile($fileName);
 
+            $photo = $form->get('photo')->getData();
+            $photoName = $uploader->uploadPhoto($photo);
+            $music->setPhoto($photoName);
+
             $music->setUser($currentUser);
+            // $music->addArtist($artist);
+            // $music->addGenre($genre);
 
             $em->persist($music);
             $em->flush();

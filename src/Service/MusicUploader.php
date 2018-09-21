@@ -6,24 +6,38 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MusicUploader
 {
-    private $targetDirectory;
+    private $musicsFilesDirectory;
+    private $musicsPhotosDirectory;
 
-    public function __construct($targetDirectory)
+    public function __construct($musicsFilesDirectory, $musicsPhotosDirectory)
     {
-        $this->targetDirectory = $targetDirectory;
+        $this->musicsFilesDirectory = $musicsFilesDirectory;
+        $this->musicsPhotosDirectory = $musicsPhotosDirectory;
     }
 
-    // TODO voir pour ranger les musiques par user
-    public function upload(UploadedFile $file)
+    public function uploadFile(UploadedFile $file)
     {
     	$fileName = $file->getClientOriginalName();
-    	$file->move($this->getTargetDirectory(), $fileName);
+    	$file->move($this->getMusicsFilesDirectory(), $fileName);
 
     	return $fileName;
     }
 
-    public function getTargetDirectory()
+    public function uploadPhoto(UploadedFile $photo)
     {
-        return $this->targetDirectory;
+        $photoName = $photo->getClientOriginalName();
+        $photo->move($this->getMusicsPhotosDirectory(), $photoName);
+
+        return $photoName;
+    }
+
+    private function getMusicsFilesDirectory()
+    {
+        return $this->musicsFilesDirectory;
+    }
+
+    private function getMusicsPhotosDirectory()
+    {
+        return $this->musicsPhotosDirectory;
     }
 }

@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    musics_directory: '%kernel.project_dir%/public/uploads/musics'
+    musics_files_directory: '%kernel.project_dir%/public/uploads/musics/files'
+    musics_photos_directory: '%kernel.project_dir%/public/uploads/musics/photos'
     genres_photos_directory: '%kernel.project_dir%/public/uploads/genres/photos'
 
 services:
@@ -58,7 +59,8 @@ services:
 
     App\Service\MusicUploader:
         arguments:
-            $targetDirectory: '%musics_directory%'
+            $musicsFilesDirectory: '%musics_files_directory%'
+            $musicsPhotosDirectory: '%musics_photos_directory%'
 
     App\Service\GenrePhotoUploader:
         arguments:
